@@ -12,11 +12,11 @@ class Board:
         all_letters = self.cards * 2
         random.shuffle(all_letters)
 
-        k = 0
+        l = 0
         for i in range(self.rows):
             for j in range(self.cols):
-                self.board[i][j] = all_letters[k]
-                k += 1
+                self.board[i][j] = all_letters[l]
+                l += 1
 
     def display_full_board(self):
         board_str = ""
@@ -26,11 +26,11 @@ class Board:
             board_str += '\n'
         return board_str
 
-    def display_board(self, y, x):
+    def display_board(self, x, y):
         board_str = ""
         for i in range(len(self.board)):
             for j in range(len(self.board[0])):
-                if i is x and j is y:
+                if i is y and j is x:
                     board_str += self.board[i][j]
                 elif self.board[i][j] != '_':
                     board_str += 'X'
@@ -48,20 +48,24 @@ class Board:
         return board_str
 
     def check_matching(self, coords1, coords2):
-        x1 = coords2[0]
-        y1 = coords2[1]
-        x2 = coords1[0]
-        y2 = coords1[1]
+        x1 = coords1[0]
+        y1 = coords1[1]
+        x2 = coords2[0]
+        y2 = coords2[1]
 
         def is_valid_coordinate(x, y):
-            return 0 <= x < self.rows and 0 <= y < self.cols
-
-        print(x1, y1, x2, y2, self.board[x1][y1], self.board[x2][y2])
-        print(self.board)
+            return 0 <= x < self.cols and 0 <= y < self.rows
 
         if is_valid_coordinate(x1, y1) and is_valid_coordinate(x2, y2):
-            if self.board[x1][y1] == self.board[x2][y2]:
-                self.board[x1][y1] = '_'
-                self.board[x2][y2] = '_'
+            if self.board[y1][x1] == self.board[y2][x2]:
+                self.board[y1][x1] = '_'
+                self.board[y2][x2] = '_'
                 return True
         return False
+
+    def is_empty(self):
+        for row in self.board:
+            for c in row:
+                if c != '_':
+                    return False
+        return True

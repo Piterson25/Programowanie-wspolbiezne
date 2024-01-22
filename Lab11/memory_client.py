@@ -69,8 +69,23 @@ class Client:
                 continue
             elif response[0] == 'S':
                 score = response[1:]
-                print(f"Wow zdobyles 1 punkt! Masz lacznie {score} punktow")
+                print(f"Wow zdobyłes 1 punkt! Masz łacznie {score} punktów")
                 continue
+            elif response[0] == 'E':
+                scores = response[1:].split()
+                your_score = scores[0]
+                enemy_score = scores[1]
+                print("KONIEC GRY!")
+                if your_score > enemy_score:
+                    print(f"{Cards.cards['B']}{"ZWYCIĘSKO WYGRAŁEŚ!"}\033[0m")
+                elif enemy_score > your_score:
+                    print(f"{Cards.cards['A']}{"SROMOTNIE PRZEGRAŁEŚ!"}\033[0m")
+                else:
+                    print(f"{Cards.cards['C']}{"REMISSS"}\033[0m")
+
+                print(f"Ty: {your_score} Przeciwnik: {enemy_score}")
+
+                self.loop = False
             elif response == '0':
                 print("Przeciwnik ma turę...")
                 continue
